@@ -1,0 +1,13 @@
+body{
+	background-color: #482C6D;
+	color: #fff;
+}
+input{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.modal-dialog,
+.modal-content{
+	background-color: #A787D1;
+	color: #fff;
+}
