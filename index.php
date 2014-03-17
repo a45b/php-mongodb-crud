@@ -104,7 +104,9 @@
 			});
 
 			//edit guest details
+			var $edit_row =''; 
 			$(".table").on("click", ".edit", function() {
+				$edit_row = $(this).closest("tr"); 
 				var _id = $(this).closest("tr").find("._id").text();
 				var title = $(this).closest("tr").find(".title").text();
 				var author = $(this).closest("tr").find(".author").text();
@@ -116,7 +118,9 @@
 
 			//edit guest details
 			$(".table").on("click", ".delete", function() {
-				var _id = $(this).closest("tr").find("._id").text();
+				var $this = $(this);
+				var _id = $this.closest("tr").find("._id").text();
+				
 				$.ajax({
 					url: 'delete.php',
 					type: 'POST',
@@ -124,11 +128,11 @@
 					data: {_id:_id},
 					success: function(data){
 						if(data['ok'] == 1){
-							alertify.error('Removed');	
+							alertify.error('Removed');
+							$this.closest("tr").remove();							
 						}
 					}
 				});
-				$(this).closest("tr").remove();
 			});
 
 			function update(){
@@ -144,9 +148,19 @@
 						$('#editModal').modal('hide');
 						$('#title,#author').val('');
 						alertify.success(data['title']+' Saved Successfully');		
-						read();
+						$edit_row.addClass('alert alert-success');
+						$edit_row.closest("tr").find(".title").text(title);
+						$edit_row.closest("tr").find(".author").text(author);
+						removeActive($edit_row);
 					}
 				});
+			}
+
+			function removeActive($row){
+				setTimeout(function(){
+					$row.removeClass('alert alert-success');
+				},1500);
+					
 			}
     	</script>	
 	</body>
