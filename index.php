@@ -173,11 +173,16 @@
 				data: {title:title,author:author},
 				success: function(data){
 					$('#title, #author').val('');
-					$('#newModal').modal('hide');						
-					$('#list-table tbody').prepend('<tr><td class="_id hidden">'+data['_id']['$id']+'</td><td class="title">'+data['title']+'</td><td class="author">'+data['author']+'</td><td class="text-center"><button type="button" class="edit btn btn-link btn-xs btn-block pull-right"><span class="text-primary"><i class="fa fa-pencil"></i> Edit</span></button></td><td class="text-center"><button type="button" class="delete btn btn-link btn-xs btn-block pull-right"><span class="text-danger"><i class="fa fa-trash"></i> Delete</span></button></td></tr>');
-					alertify.success('Saved Successfully');
-					$('#list-table tbody tr').first().addClass('alert alert-success');
-					removeActive($('#list-table tbody tr').first());
+					$('#newModal').modal('hide');
+					if(data == 0){
+						alertify.error('Error! Duplicate Entry');
+					}
+					else{						
+						$('#list-table tbody').prepend('<tr><td class="_id hidden">'+data['_id']['$id']+'</td><td class="title">'+data['title']+'</td><td class="author">'+data['author']+'</td><td class="text-center"><button type="button" class="edit btn btn-link btn-xs btn-block pull-right"><span class="text-primary"><i class="fa fa-pencil"></i> Edit</span></button></td><td class="text-center"><button type="button" class="delete btn btn-link btn-xs btn-block pull-right"><span class="text-danger"><i class="fa fa-trash"></i> Delete</span></button></td></tr>');
+						alertify.success('Saved Successfully');
+						$('#list-table tbody tr').first().addClass('alert alert-success');
+						removeActive($('#list-table tbody tr').first());
+					}
 				}
 			});
 		}    		
@@ -208,12 +213,16 @@
 				success: function(data){
 					$('#editModal').modal('hide');
 					$('#title,#author').val('');
-
-					alertify.success('Updated Successfully');						
-					$edit_row.addClass('alert alert-success');
-					$edit_row.closest("tr").find(".title").text(title);
-					$edit_row.closest("tr").find(".author").text(author);
-					removeActive($edit_row);
+					if(data == 0){
+						alertify.error('Error! Duplicate Entry');
+					}
+					else{
+						alertify.success('Updated Successfully');						
+						$edit_row.addClass('alert alert-success');
+						$edit_row.closest("tr").find(".title").text(title);
+						$edit_row.closest("tr").find(".author").text(author);
+						removeActive($edit_row);
+					}
 				}
 			});
 		}

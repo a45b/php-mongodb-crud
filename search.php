@@ -1,11 +1,10 @@
 <?php
 	require_once 'config.php';
 
-	//db.getCollection('cartoons').find({"title":/.*S.*/})	
 	$search_string = $_GET['search_string'];
 	$query = array('title' => new MongoRegex("/^$search_string/i"));	
 	$cursor = $collection->find($query);
-	
+
 	$result = array();	
 	foreach($cursor as $k => $row){
     	array_push($result, $row);
